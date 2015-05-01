@@ -8,10 +8,8 @@
     %a.navbar-brand{:href => root_path} Development Tracker
   / /.navbar-header
   %ul.nav.navbar-top-links.navbar-right
-    %li.dropdown
-      %a{"data-toggle" => "dropdown", :href => "#"} Login with Github
-      / /.dropdown-user
-    / /.dropdown
+    %li
+      %a{:href => "https://github.com/login/oauth/authorize?scope=user:email&client_id="} Login with Github
   / /.navbar-top-links
   .navbar-default.sidebar{:role => "navigation"}
     .sidebar-nav.navbar-collapse

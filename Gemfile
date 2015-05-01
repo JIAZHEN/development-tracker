@@ -9,6 +9,7 @@ gem "turbolinks"
 gem "jbuilder"
 gem "haml-rails"
 gem "mysql2"
+gem "github_api"
 
 
 group :development, :test do
