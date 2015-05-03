@@ -13,4 +13,12 @@ module GithubHelper
     github.authorize_url(scope: scopes)
   end
 
+  def exchange_token(code)
+    github.get_token(code)
+  end
+
+  def authenticated?
+    session[:access_token]
+  end
+
 end
