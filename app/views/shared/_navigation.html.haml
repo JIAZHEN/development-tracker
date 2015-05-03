@@ -10,7 +10,7 @@
   %ul.nav.navbar-top-links.navbar-right
     %li
       - if authenticated?
-        %a{:href => login_path} Welcome!
+        %a{:href => "#"}= "Welcome! #{client.user.name}"
       - else
         %a{:href => login_path} Login with Github
   / /.navbar-top-links
