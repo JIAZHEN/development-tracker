@@ -1,0 +1,12 @@
+defaults: &defaults
+  github_client_id:
+  github_client_secret:
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
