@@ -8,11 +8,29 @@
     %a.navbar-brand{:href => root_path} Development Tracker
   / /.navbar-header
   %ul.nav.navbar-top-links.navbar-right
-    %li
+    %li.dropdown
       - if authenticated?
-        %a{:href => "#"}= "Welcome! #{client.user.name}"
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          = image_tag(client.user.avatar_url, :size => "20x20")
+          = client.user.name
+          %i.fa.fa-caret-down
+        %ul.dropdown-menu.dropdown-user
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-user.fa-fw
+              User Profile
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-gear.fa-fw
+              Settings
+          %li.divider
+          %li
+            %a{:href => logout_path, "data-method" => "delete"}
+              %i.fa.fa-sign-out.fa-fw
+              Logout
       - else
         %a{:href => login_path} Login with Github
+
   / /.navbar-top-links
   .navbar-default.sidebar{:role => "navigation"}
     .sidebar-nav.navbar-collapse

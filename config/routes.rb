@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  root  to: "dashboard#index"
-  get "login", to: "dashboard#login"
-  get "authenticate", to: "dashboard#authenticate"
+  root :to => "dashboard#index"
+  get "login", :to => "dashboard#login"
+  get "callback", :to => "dashboard#callback"
+  delete "logout", :to => "dashboard#destroy"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
