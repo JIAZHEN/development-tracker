@@ -31,44 +31,42 @@
       - else
         %a{:href => login_path} Login with Github
 
-  / /.navbar-top-links
-  .navbar-default.sidebar{:role => "navigation"}
-    .sidebar-nav.navbar-collapse
-      %ul#side-menu.nav
-        %li.sidebar-search
-          .input-group.custom-search-form
-            %input.form-control{:placeholder => "Search...", :type => "text"}/
-            %span.input-group-btn
-              %button.btn.btn-default{:type => "button"}
-                %i.fa.fa-search
-          / /input-group
-        %li
-          %a{:href => "index.html"}
-            %i.fa.fa-dashboard.fa-fw
-            Dashboard
-        %li
-          %a{:href => "#"}
-            %i.fa.fa-bar-chart-o.fa-fw
-            Charts
-        %li
-          %a{:href => "tables.html"}
-            %i.fa.fa-table.fa-fw
-            Tables
-        %li
-          %a{:href => "forms.html"}
-            %i.fa.fa-edit.fa-fw
-            Forms
-        %li
-          %a{:href => "#"}
-            %i.fa.fa-wrench.fa-fw
-            UI Elements
-        %li
-          %a{:href => "#"}
-            %i.fa.fa-sitemap.fa-fw
-            Multi-Level Dropdown
-        %li
-          %a{:href => "#"}
-            %i.fa.fa-files-o.fa-fw
-            Sample Pages
-    / /.sidebar-collapse
-  / /.navbar-static-side
+  - if authenticated?
+    .navbar-default.sidebar{:role => "navigation"}
+      .sidebar-nav.navbar-collapse
+        %ul#side-menu.nav
+          %li.sidebar-search
+            .input-group.custom-search-form
+              %input.form-control{:placeholder => "Search...", :type => "text"}/
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "button"}
+                  %i.fa.fa-search
+            / /input-group
+          %li
+            %a{:href => "index.html"}
+              %i.fa.fa-dashboard.fa-fw
+              Dashboard
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-bar-chart-o.fa-fw
+              Charts
+          %li
+            %a{:href => "tables.html"}
+              %i.fa.fa-table.fa-fw
+              Tables
+          %li
+            %a{:href => "forms.html"}
+              %i.fa.fa-edit.fa-fw
+              Forms
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-wrench.fa-fw
+              UI Elements
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-sitemap.fa-fw
+              Multi-Level Dropdown
+          %li
+            %a{:href => "#"}
+              %i.fa.fa-files-o.fa-fw
+              Sample Pages
