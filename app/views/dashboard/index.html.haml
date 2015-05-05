@@ -410,4 +410,6 @@
           / /.panel .chat-panel
         / /.col-lg-4
       / /.row
-    / /#page-wrapper
+  - else
+    - flash.each do |message_type, message|
+      %div{:class => "alert alert-#{message_type}"}= message

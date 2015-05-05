@@ -22,7 +22,7 @@ module SessionsHelper
   end
 
   def authenticated?
-    session[:access_token]
+    !session[:access_token].blank?
   end
 
   def log_out

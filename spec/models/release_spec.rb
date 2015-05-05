@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Release, type: :model do
   let(:release) { Release.new }
