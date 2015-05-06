@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :releases
+
   root :to => "dashboard#index"
 
   match "login", to: "dashboard#login", via: :get
