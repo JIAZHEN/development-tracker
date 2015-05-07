@@ -1,18 +1,43 @@
+.row
+  .col-lg-12
+    %h1.page-header Make a Release Request
+
 %form.form-horizontal
   .form-group
-    %label.col-sm-2.control-label{:for => "inputEmail3"} Email
-    .col-sm-10
-      %input#inputEmail3.form-control{:placeholder => "Email", :type => "email"}/
+    %label.col-sm-2.control-label{:for => "jira_number"} JIRA Number
+    .col-sm-2
+      %input.form-control{:placeholder => "JIRA Number", :type => "text"}/
   .form-group
-    %label.col-sm-2.control-label{:for => "inputPassword3"} Password
-    .col-sm-10
-      %input#inputPassword3.form-control{:placeholder => "Password", :type => "password"}/
+    %label.col-sm-2.control-label{:for => "qa"} QA
+    .col-sm-2
+      %select.form-control
+        %option QA
+  .form-group
+    %label.col-sm-2.control-label{:for => "repository"} Repository
+    .col-sm-2
+      %select.form-control
+        %option Repository
+    .col-sm-1
+      %button.btn.btn-primary{:type => "button"} Refresh
+  .form-group
+    %label.col-sm-2.control-label{:for => "branch"} Branch
+    .col-sm-2
+      %select.form-control
+        %option branch
+    .col-sm-1
+      %button.btn.btn-primary{:type => "button"} Refresh
+  .form-group
+    %label.col-sm-2.control-label{:for => "SHA"} SHA
+    .col-sm-2
+      %input.form-control{:placeholder => "SHA", :type => "text"}/
+  .form-group
+    %label.col-sm-2.control-label{:for => "Deloyment Instruction"} Deloyment Instruction
+    .col-sm-2
+      %textarea.form-control{:rows => "5", :placeholder => "Deloyment Instruction"}
+  .form-group
+    %label.col-sm-2.control-label{:for => "Rollback Instruction"} Rollback Instruction
+    .col-sm-2
+      %textarea.form-control{:rows => "5", :placeholder => "Rollback Instruction"}
   .form-group
     .col-sm-offset-2.col-sm-10
-      .checkbox
-        %label
-          %input{:type => "checkbox"}/
-          Remember me
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      %button.btn.btn-default{:type => "submit"} Sign in
+      %button.btn.btn-success{:type => "submit"} Submit
