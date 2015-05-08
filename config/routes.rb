@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   match "callback", to: "dashboard#callback", via: :get
   match "logout", to: "dashboard#destroy", via: :delete
 
+  match "sync_github", to: "releases#sync_github", via: :get
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

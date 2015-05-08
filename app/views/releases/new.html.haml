@@ -13,19 +13,16 @@
       %select.form-control
         %option QA
   .form-group
-    %label.col-sm-2.control-label{:for => "repository"} Repository
+    %label.col-sm-2.control-label{:for => "app"} App
     .col-sm-2
       %select.form-control
-        %option Repository
-    .col-sm-1
-      %button.btn.btn-primary{:type => "button"} Refresh
+        - @apps.each do |app|
+          %option{:value => app.id}= app.name
   .form-group
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2
       %select.form-control
         %option branch
-    .col-sm-1
-      %button.btn.btn-primary{:type => "button"} Refresh
   .form-group
     %label.col-sm-2.control-label{:for => "SHA"} SHA
     .col-sm-2
@@ -39,5 +36,7 @@
     .col-sm-2
       %textarea.form-control{:rows => "5", :placeholder => "Rollback Instruction"}
   .form-group
-    .col-sm-offset-2.col-sm-10
+    .col-sm-offset-2.col-sm-1
       %button.btn.btn-success{:type => "submit"} Submit
+    .col-sm-1
+      %a.btn.btn-primary{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Please only do this when repo/branch is not listed", :href => sync_github_path} Sync Github
