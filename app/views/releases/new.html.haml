@@ -13,11 +13,11 @@
       %select.form-control
         %option QA
   .form-group
-    %label.col-sm-2.control-label{:for => "app"} App
+    %label.col-sm-2.control-label{:for => "repository"} Repository
     .col-sm-2
       %select.form-control
-        - @apps.each do |app|
-          %option{:value => app.id}= app.name
+        - @repositories.each do |repository|
+          %option{:value => repository.id}= repository.name
   .form-group
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2

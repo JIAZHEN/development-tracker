@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501111309) do
+ActiveRecord::Schema.define(version: 20150510211954) do
 
-  create_table "apps", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "branches", force: :cascade do |t|
+    t.integer  "repository_id", limit: 4
+    t.string   "name",          limit: 255
+    t.boolean  "active",        limit: 1,   default: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   create_table "environments", force: :cascade do |t|
@@ -43,6 +45,12 @@ ActiveRecord::Schema.define(version: 20150501111309) do
     t.string   "rollback_instruction", limit: 255
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "statuses", force: :cascade do |t|

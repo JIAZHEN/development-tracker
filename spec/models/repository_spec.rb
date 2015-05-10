@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe App, type: :model do
-  let(:app) { App.new }
-  subject { app }
+RSpec.describe Repository, type: :model do
+  let(:repository) { Repository.new }
+  subject { repository }
 
   describe "#name" do
     describe "when name is not present" do
@@ -10,13 +10,13 @@ RSpec.describe App, type: :model do
     end
 
     describe "when name is empty" do
-      before { app.name = " " }
+      before { repository.name = " " }
 
       it { is_expected.not_to be_valid }
     end
 
     describe "when name is over 50 characters" do
-      before { app.name = "a" * 51 }
+      before { repository.name = "a" * 51 }
 
       it { is_expected.not_to be_valid }
     end
