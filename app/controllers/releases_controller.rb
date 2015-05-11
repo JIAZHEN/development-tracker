@@ -8,13 +8,10 @@ class ReleasesController < ApplicationController
 
   def sync_github
     if authenticated?
-      client.org_repos(ORGANISATION).each do |repo|
-        repository = Repository.find_or_create_by(name: repo.name)
-        client.branches(repo.full_name).each do |branch|
-          repository.branches.find_or_create_by(name: branch.name)
-        end
-      end
+      @repositories = Repository.all
     end
-    redirect_to new_release_path
+    respond_to do |format|
+      format.json { render json: @repositories, status: 200 }
+    end
   end
 end

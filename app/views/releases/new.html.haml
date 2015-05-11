@@ -15,13 +15,13 @@
   .form-group
     %label.col-sm-2.control-label{:for => "repository"} Repository
     .col-sm-2
-      %select.form-control
+      %select#repository.form-control
         - @repositories.each do |repository|
           %option{:value => repository.id}= repository.name
   .form-group
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2
-      %select.form-control
+      %select#branch.form-control
         %option branch
     .col-sm-1
       %a#sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left", :href => "#"}
@@ -44,4 +44,22 @@
 
 :javascript
   Ladda.bind('#sync');
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
+
+  $('#sync').click(function(e){
+    e.preventDefault();
+    var l = Ladda.create(this);
+    l.start();
+    var value = $("#repository").find(":selected").text();
+    $.post("/sync_github",
+      { repository : value },
+      function(response){
+        var rows = "";
+        for (var index in response) {
+          rows += "<option value='" + response[index].id + "'> " + response[index].name + "</option>"
+        }
+        $('#branch').html(rows);
+      }, "json")
+    .always(function() { l.stop(); });
+    return false;
+  });
