@@ -22,7 +22,9 @@
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2
       %select#branch.form-control
-        %option branch
+        - if @repositories.first
+          - Array(@repositories.first.active_branches).each do |branch|
+            %option{:value => branch.id}= branch.name
     .col-sm-1
       %a#sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left", :href => "#"}
         %span.ladda-label Sync Github
@@ -50,9 +52,9 @@
     e.preventDefault();
     var l = Ladda.create(this);
     l.start();
-    var value = $("#repository").find(":selected").text();
+    var value = $("#repository").find(":selected").val();
     $.post("/sync_github",
-      { repository : value },
+      { repository_id : value },
       function(response){
         var rows = "";
         for (var index in response) {

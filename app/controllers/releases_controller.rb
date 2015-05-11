@@ -8,10 +8,19 @@ class ReleasesController < ApplicationController
 
   def sync_github
     if authenticated?
-      @repositories = Repository.all
+      repository = Repository.find(params["repository_id"].to_i)
+      @branches = client.branches("#{ORGANISATION}/#{repository.name}").map do |branch|
+        repository.branches.find_or_create_by(name: branch.name)
+      end
     end
     respond_to do |format|
-      format.json { render json: @repositories, status: 200 }
+      format.json { render json: @branches, status: 200 }
     end
+  end
+
+  private
+
+  def update_branches
+
   end
 end
