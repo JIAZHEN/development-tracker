@@ -40,3 +40,6 @@
       %button.btn.btn-success{:type => "submit"} Submit
     .col-sm-1
       %a.btn.btn-primary{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Please only do this when repo/branch is not listed", :href => sync_github_path} Sync Github
+
+:javascript
+  $('[data-toggle="tooltip"]').tooltip()
