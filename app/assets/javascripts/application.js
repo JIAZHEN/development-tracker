@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap.min
-//= require releases
+//= require spin.min
+//= require ladda.min

@@ -23,6 +23,9 @@
     .col-sm-2
       %select.form-control
         %option branch
+    .col-sm-1
+      %a#sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left", :href => "#"}
+        %span.ladda-label Sync Github
   .form-group
     %label.col-sm-2.control-label{:for => "SHA"} SHA
     .col-sm-2
@@ -38,8 +41,7 @@
   .form-group
     .col-sm-offset-2.col-sm-1
       %button.btn.btn-success{:type => "submit"} Submit
-    .col-sm-1
-      %a.btn.btn-primary{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Please only do this when repo/branch is not listed", :href => sync_github_path} Sync Github
 
 :javascript
+  Ladda.bind('#sync');
   $('[data-toggle="tooltip"]').tooltip()
