@@ -4,4 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   include SessionsHelper
+
+  before_action :require_authentication
+
+  private
+
+  def require_authentication
+    redirect_to root_path unless authenticated?
+  end
 end
