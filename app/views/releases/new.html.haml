@@ -19,7 +19,7 @@
   .form-group#branch
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2
-      %input.form-control{:placeholder => "Name of the branch", :autocomplete => "off", "data-provide" => "typeahead", :type => "text", "data-source" => []}/
+      %input.form-control{:placeholder => "Name of the branch", :autocomplete => "off", "data-provide" => "typeahead", :type => "text"}/
     .col-sm-1
       %a#sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left", :href => "#"}
         %span.ladda-label Sync Github
@@ -51,11 +51,7 @@
     $.post("/sync_github",
       { repository : value },
       function(response){
-        var rows = "";
-        for (var index in response) {
-          rows += "<option value='" + response[index].id + "'> " + response[index].name + "</option>"
-        }
-        $('#branch').html(rows);
+        update_branch(response);
       }, "json")
     .always(function() { l.stop(); });
     return false;
@@ -79,11 +75,17 @@
     $.post("/get_branches",
       { repository : value },
       function(response){
-        $('#branch input').data('source', response);
+        update_branch(response);
       }, "json")
     .always(function() { setTimeout(clearNotification, 1500); });
   }
 
   function clearNotification() {
     $('#branch').removeClass('has-success');
+  }
+
+  function update_branch(data) {
+    $('#branch input').val('');
+    $('#branch input').removeData('source');
+    $('#branch input').data('source', data);
   }
