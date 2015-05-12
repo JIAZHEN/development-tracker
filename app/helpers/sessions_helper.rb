@@ -8,7 +8,9 @@ module SessionsHelper
   end
 
   def client
-    @client ||= Octokit::Client.new(:access_token => session[:access_token])
+    @client ||= Octokit::Client.new(
+      :access_token => session[:access_token],
+      :auto_paginate => true)
   end
 
   def authorize_url

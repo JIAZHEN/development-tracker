@@ -15,9 +15,7 @@
   .form-group
     %label.col-sm-2.control-label{:for => "repository"} Repository
     .col-sm-2
-      %select#repository.form-control
-        - @repositories.each do |repository|
-          %option{:value => repository.id}= repository.name
+      %input.form-control{:placeholder => "Name of the repository", :autocomplete => "off", "data-provide" => "typeahead", :type => "text", "data-source" => @repositories.to_json}/
   .form-group
     %label.col-sm-2.control-label{:for => "branch"} Branch
     .col-sm-2
