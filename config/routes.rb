@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   match "logout", to: "dashboard#destroy", via: :delete
 
   match "sync_github", to: "releases#sync_github", via: :post
+  match "get_branches", to: "releases#get_branches", via: :post
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
