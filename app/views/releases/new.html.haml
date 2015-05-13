@@ -6,18 +6,18 @@
   %input{:name => "authenticity_token", :type => "hidden", :value => form_authenticity_token}/
 
   .form-group
-    %label.col-sm-2.control-label{:for => "jira_number"} JIRA Number
+    %label.col-sm-4.control-label{:for => "jira_number"} JIRA Number
     .col-sm-2
       %input.form-control{:placeholder => "JIRA Number", :name => "jira_number", :type => "text"}/
 
   .form-group
-    %label.col-sm-2.control-label{:for => "qa"} QA
+    %label.col-sm-4.control-label{:for => "qa"} QA
     .col-sm-2
       %select.form-control
         %option QA
 
   .form-group.form-header-underline
-    %h4.col-sm-2.form-header.control-label
+    %h4.col-sm-4.form-header.control-label
       Application(s)
       %a.plus-link{:href => "#"}
         %i.fa.fa-plus-circle.fa-lg

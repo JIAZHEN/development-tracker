@@ -1,14 +1,14 @@
-.col-xs-5.col-sm-5.col-md-3.col-lg-3
+.col-xs-5.col-sm-5.col-md-3.col-lg-6
   .row.box
     %h4 App
     .form-group
       %label.col-sm-3.control-label{:for => "repository"} Repository
-      .col-sm-6
+      .col-sm-5
         %input.repository.form-control{:placeholder => "Name of the repository", :autocomplete => "off", "data-provide" => "typeahead", :type => "text", "data-source" => @repositories.to_json, :name => "app[repository][]"}/
 
     .form-group
       %label.col-sm-3.control-label{:for => "branch"} Branch
-      .col-sm-6
+      .col-sm-5
         %select.branch.form-control{:name => "app[branch][]"}
       .col-sm-1
         %a.sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left"}
@@ -16,17 +16,17 @@
 
     .form-group
       %label.col-sm-3.control-label{:for => "SHA"} SHA
-      .col-sm-6
+      .col-sm-5
         %input.form-control{:placeholder => "SHA", :type => "text", :name => "app[sha][]"}/
 
     .form-group
       %label.col-sm-3.control-label{:for => "Deloyment Instruction"} Deloyment Instruction
-      .col-sm-6
+      .col-sm-5
         %textarea.form-control{:rows => "5", :name => "app[deployment_instruction][]", :placeholder => "Deloyment Instruction"}
 
     .form-group
       %label.col-sm-3.control-label{:for => "Rollback Instruction"} Rollback Instruction
-      .col-sm-6
+      .col-sm-5
         %textarea.form-control{:rows => "5", :name => "app[rollback_instruction][]", :placeholder => "Rollback Instruction"}
       .col-sm-1
         %a.trash{:href => "#"}
@@ -39,7 +39,7 @@
 
   // remove form
   $('.trash').click(function(e){
-    $(this).parents('.col-xs-5.col-sm-5.col-md-3.col-lg-3')[0].remove();
+    $(this).parents('.col-xs-5.col-sm-5.col-md-3.col-lg-6')[0].remove();
   });
 
   // sync branches from github
@@ -47,48 +47,43 @@
     e.preventDefault();
     var l = Ladda.create(this);
     l.start();
-    var parent = $(this).parents('.col-xs-5.col-sm-5.col-md-3.col-lg-3')[0];
-    console.log(parent);
-    var value = parent.find('.repository').val();
-    console.log(value);
+    var value = $(this).closest(".form-group").parent().find(".repository").val();
+    var branch_element = $(this).closest('.form-group').find('.branch');
     $.post("/get_branches",
       { repository : value, type : "sync" },
       function(response){
-        update_branch(response);
+        update_branch(branch_element, response);
       }, "json")
     .always(function() { l.stop(); });
     return false;
   });
 
-  var typingTimer;                // timer identifier
+  var typingTimer = 0;                // timer identifier
   var doneTypingInterval = 1500;  // time in ms
 
-  $('#repository').keyup(function(){
+  $('.repository').keyup(function(){
     clearTimeout(typingTimer);
-    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval, $(this));
   });
 
-  $('#repository').keydown(function(){
+  $('.repository').keydown(function(){
     clearTimeout(typingTimer);
   });
 
-  function doneTyping () {
-    var value = $("#repository").val();
+  function doneTyping(element) {
+    var value = element.val();
+    var branch_element = element.closest('.form-group').parent().find('.branch');
     $.post("/get_branches",
       { repository : value, type : "get" },
       function(response){
-        update_branch(response);
+        update_branch(branch_element, response);
       }, "json");
   }
 
-  function clearNotification() {
-    $('#branch').removeClass('has-success');
-  }
-
-  function update_branch(data) {
+  function update_branch(branch_element, data) {
     var rows = "";
     for (var index in data) {
       rows += "<option value='" + data[index].id + "'> " + data[index].name + "</option>"
     }
-    $('#branch').html(rows);
+    branch_element.html(rows);
   }
