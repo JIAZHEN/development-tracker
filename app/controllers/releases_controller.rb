@@ -18,7 +18,6 @@ class ReleasesController < ApplicationController
   end
 
   def create
-    p params
   end
 
   private
