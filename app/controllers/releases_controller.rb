@@ -4,6 +4,7 @@ class ReleasesController < ApplicationController
 
   def new
     @repositories = Repository.all
+    @release = Release.new
   end
 
   def get_branches
@@ -14,6 +15,10 @@ class ReleasesController < ApplicationController
       repository.active_branches
     end
     respond_with_json branches
+  end
+
+  def create
+    p params
   end
 
   private
