@@ -1,16 +1,16 @@
 .col-xs-5.col-sm-5.col-md-3.col-lg-6
   .row.box
-    %h4 App
+    %h4 Project
     .form-group
       %label.col-sm-3.control-label{:for => "repository"} Repository
       .col-sm-5
-        %input.repository.form-control{:placeholder => "Name of the repository", :autocomplete => "off", "data-provide" => "typeahead", :type => "text", "data-source" => @repositories.to_json, :name => "app[repository][]", :required => ""}/
+        %input.repository.form-control{:placeholder => "Name of the repository", :autocomplete => "off", "data-provide" => "typeahead", :type => "text", "data-source" => @repositories.to_json, :name => "release[projects][repositories][]", :required => ""}/
         .help-block.with-errors
 
     .form-group
       %label.col-sm-3.control-label{:for => "branch"} Branch
       .col-sm-5
-        %select.branch.form-control{:name => "app[branch][]", :required => ""}
+        %select.branch.form-control{:name => "release[projects][branches][]", :required => ""}
         .help-block.with-errors
       .col-sm-1
         %a.sync.btn.btn-primary.ladda-button{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Update when branch is not listed", "data-style" => "expand-left"}
@@ -19,19 +19,19 @@
     .form-group
       %label.col-sm-3.control-label{:for => "SHA"} SHA
       .col-sm-5
-        %input.form-control{:placeholder => "SHA", :type => "text", :name => "app[sha][]", :required => ""}/
+        %input.form-control{:placeholder => "SHA", :type => "text", :name => "release[projects][shas][]", :required => ""}/
         .help-block.with-errors
 
     .form-group
       %label.col-sm-3.control-label{:for => "Deloyment Instruction"} Deloyment Instruction
       .col-sm-5
-        %textarea.form-control{:rows => "5", :name => "app[deployment_instruction][]", :placeholder => "Deloyment Instruction", :required => ""}
+        %textarea.form-control{:rows => "5", :name => "release[projects][deployment_instructions][]", :placeholder => "Deloyment Instruction", :required => ""} Normal deploy then restart
         .help-block.with-errors
 
     .form-group
       %label.col-sm-3.control-label{:for => "Rollback Instruction"} Rollback Instruction
       .col-sm-5
-        %textarea.form-control{:rows => "5", :name => "app[rollback_instruction][]", :placeholder => "Rollback Instruction", :required => ""}
+        %textarea.form-control{:rows => "5", :name => "release[projects][rollback_instructions][]", :placeholder => "Rollback Instruction", :required => ""}
         .help-block.with-errors
       .col-sm-1
         %a.trash{:href => "#"}

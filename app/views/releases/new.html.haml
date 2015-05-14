@@ -8,14 +8,23 @@
   .form-group
     %label.col-sm-4.control-label{:for => "jira_number"} JIRA Number
     .col-sm-2
-      %input.form-control{:placeholder => "JIRA Number", :name => "jira_number", :type => "text", :required => ""}/
+      %input.form-control{:placeholder => "JIRA Number", :name => "release[jira_number]", :type => "text", :required => ""}/
+      .help-block.with-errors
+
+  .form-group
+    %label.col-sm-4.control-label{:for => "environment"} Environment
+    .col-sm-2
+      %select.form-control{:name => "release[environment]", :required => ""}
+        - @environments.each do |environment|
+          %option{:value => environment.id}= environment.name
       .help-block.with-errors
 
   .form-group
     %label.col-sm-4.control-label{:for => "qa"} QA
     .col-sm-2
-      %select.form-control{:name => "qa", :required => ""}
-        %option QA
+      %select.form-control{:name => "release[qa]", :required => ""}
+        - APP_CONFIG["QAs"].each do |qa|
+          %option{:value => qa}= qa
       .help-block.with-errors
 
   .form-group.form-header-underline

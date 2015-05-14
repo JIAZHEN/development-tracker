@@ -4,7 +4,7 @@ class ReleasesController < ApplicationController
 
   def new
     @repositories = Repository.all
-    @release = Release.new
+    @environments = Environment.all
   end
 
   def get_branches
@@ -18,6 +18,7 @@ class ReleasesController < ApplicationController
   end
 
   def create
+    p create_projects
   end
 
   private
@@ -31,6 +32,18 @@ class ReleasesController < ApplicationController
   def sync_branches_from_github(repository)
     client.branches("#{ORGANISATION}/#{repository.name}").map do |branch|
       repository.branches.find_or_create_by(name: branch.name)
+    end
+  end
+
+  def create_projects
+    project_params = params["release"]["projects"]
+    projects = project_params["branches"].zip(project_params["shas"],
+      project_params["deployment_instructions"],
+      project_params["rollback_instructions"])
+    projects.map do |project|
+      Project.find_or_create_by(:branch_id => project[0], :sha => project[1],
+        :deployment_instruction => project[2],
+        :rollback_instruction => project[3] )
     end
   end
 end
