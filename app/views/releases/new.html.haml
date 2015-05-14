@@ -27,6 +27,12 @@
           %option{:value => qa}= qa
       .help-block.with-errors
 
+  .form-group
+    %label.col-sm-4.control-label{:for => "description"} Description
+    .col-sm-5
+      %textarea.form-control{:rows => "5", :name => "release[description]", :required => ""} Describe the release in plain english
+      .help-block.with-errors
+
   .form-group.form-header-underline
     %h4.col-sm-4.form-header.control-label
       Application(s)

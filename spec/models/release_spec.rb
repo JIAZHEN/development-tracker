@@ -5,10 +5,7 @@ RSpec.describe Release, type: :model do
   subject { release }
 
   describe "Attribute is bank" do
-    %i{
-        jira_number project_id environment_id status_id
-        description deploy_instruction rollback_instruction
-      }.each do |attribute|
+    %i{jira_number environment_id status_id description qa}.each do |attribute|
       context "when #{attribute} is not present" do
         it { is_expected.not_to be_valid }
       end
