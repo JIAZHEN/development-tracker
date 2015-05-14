@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514144906) do
+ActiveRecord::Schema.define(version: 20150514203253) do
 
   create_table "branches", force: :cascade do |t|
     t.integer  "repository_id", limit: 4
@@ -38,11 +38,11 @@ ActiveRecord::Schema.define(version: 20150514144906) do
   end
 
   create_table "releases", force: :cascade do |t|
+    t.string   "jira_number",    limit: 255
     t.integer  "environment_id", limit: 4
+    t.integer  "status_id",      limit: 4
     t.string   "qa",             limit: 255
     t.string   "description",    limit: 255
-    t.string   "jira_number",    limit: 255
-    t.integer  "status_id",      limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
