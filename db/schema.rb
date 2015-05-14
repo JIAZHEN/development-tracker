@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514073235) do
+ActiveRecord::Schema.define(version: 20150514121004) do
 
   create_table "branches", force: :cascade do |t|
     t.integer  "repository_id", limit: 4
@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(version: 20150514073235) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.integer  "app_id",     limit: 4
-    t.integer  "branch_id",  limit: 4
-    t.string   "sha",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "repository_id", limit: 4
+    t.integer  "branch_id",     limit: 4
+    t.string   "sha",           limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "releases", force: :cascade do |t|

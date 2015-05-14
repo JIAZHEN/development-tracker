@@ -5,7 +5,7 @@ RSpec.describe Project, type: :model do
   subject { project }
 
   describe "Attribute is bank" do
-    %i{ branch sha app_id }.each do |attribute|
+    %i{ branch_id sha repository_id }.each do |attribute|
       context "when #{attribute} is not present" do
         it { is_expected.not_to be_valid }
       end
