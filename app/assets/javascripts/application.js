@@ -17,3 +17,4 @@
 //= require spin.min
 //= require ladda.min
 //= require bootstrap3-typeahead.min
+//= require validator.min

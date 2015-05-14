@@ -2,25 +2,29 @@
   .col-lg-12
     %h1.page-header Make a Release Request
 
-%form#new_release.form-horizontal{"accept-charset" => "UTF-8", :action => "/releases", :method => "post"}
+%form#new_release.form-horizontal{"accept-charset" => "UTF-8", :action => "/releases", :method => "post", "data-toggle" => "validator"}
   %input{:name => "authenticity_token", :type => "hidden", :value => form_authenticity_token}/
 
   .form-group
     %label.col-sm-4.control-label{:for => "jira_number"} JIRA Number
     .col-sm-2
-      %input.form-control{:placeholder => "JIRA Number", :name => "jira_number", :type => "text"}/
+      %input.form-control{:placeholder => "JIRA Number", :name => "jira_number", :type => "text", :required => ""}/
+      .help-block.with-errors
 
   .form-group
     %label.col-sm-4.control-label{:for => "qa"} QA
     .col-sm-2
-      %select.form-control
+      %select.form-control{:name => "qa", :required => ""}
         %option QA
+      .help-block.with-errors
 
   .form-group.form-header-underline
     %h4.col-sm-4.form-header.control-label
       Application(s)
       %a.plus-link{:href => "#"}
         %i.fa.fa-plus-circle.fa-lg
+    .col-sm-2.small-header
+      The order of the apps submitted would be the order for OPS to deploy.
 
   .github-info-container.form-header-underline
     #app-area.row
