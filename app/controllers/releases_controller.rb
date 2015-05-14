@@ -18,7 +18,14 @@ class ReleasesController < ApplicationController
   end
 
   def create
-    p create_projects
+    release_params = params["release"]
+    release = Release.create(:environment_id => params["release"]["environment"],
+      :jira_number => params["release"]["jira_number"],
+      :qa => params["release"]["qa"],
+      :description => params["release"]["description"],
+      :status_id => Status::WAIT_TO_DEPLOY)
+    create_projects(release)
+    redirect_to root_path
   end
 
   private
@@ -35,13 +42,13 @@ class ReleasesController < ApplicationController
     end
   end
 
-  def create_projects
+  def create_projects(release)
     project_params = params["release"]["projects"]
     projects = project_params["branches"].zip(project_params["shas"],
       project_params["deployment_instructions"],
       project_params["rollback_instructions"])
     projects.map do |project|
-      Project.find_or_create_by(:branch_id => project[0], :sha => project[1],
+      release.projects.find_or_create_by(:branch_id => project[0], :sha => project[1],
         :deployment_instruction => project[2],
         :rollback_instruction => project[3] )
     end

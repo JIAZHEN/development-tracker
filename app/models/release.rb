@@ -4,4 +4,6 @@ class Release < ActiveRecord::Base
   validates :status_id, presence: true
   validates :description, presence: true
   validates :qa, presence: true
+
+  has_many :projects
 end

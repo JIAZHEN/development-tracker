@@ -5,6 +5,10 @@ namespace :db do
       Environment.find_or_create_by(name: env)
     end
 
+    ["wait to deploy", "deploying", "deployed", "rolling back", "rolled back"].each do |env|
+      Status.find_or_create_by(name: env)
+    end
+
     # popular repositories
     client = Octokit::Client.new(
       :access_token => APP_CONFIG["github_access_token"],
