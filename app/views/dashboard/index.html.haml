@@ -12,7 +12,7 @@
             .col-xs-3
               %i.fa.fa-comments.fa-5x
             .col-xs-9.text-right
-              .huge 26
+              .huge= @counters[:new]
               %div New Releases
         %a{:href => "#"}
           .panel-footer
@@ -27,7 +27,7 @@
             .col-xs-3
               %i.fa.fa-tasks.fa-5x
             .col-xs-9.text-right
-              .huge 12
+              .huge= @counters[:deploying]
               %div Deploying
         %a{:href => "#"}
           .panel-footer
@@ -42,7 +42,7 @@
             .col-xs-3
               %i.fa.fa-shopping-cart.fa-5x
             .col-xs-9.text-right
-              .huge 124
+              .huge= @counters[:deployed]
               %div Deployed
         %a{:href => "#"}
           .panel-footer
@@ -57,8 +57,8 @@
             .col-xs-3
               %i.fa.fa-support.fa-5x
             .col-xs-9.text-right
-              .huge 13
-              %div Rollback
+              .huge= @counters[:rolled_back]
+              %div Rolled back
         %a{:href => "#"}
           .panel-footer
             %span.pull-left View Details
@@ -70,29 +70,24 @@
     .col-lg-12
       .panel.panel-default
         .panel-heading
-          %i.fa.fa-bar-chart-o.fa-fw
-          Area Chart Example
-          .pull-right
-            .btn-group
-              %button.btn.btn-default.btn-xs.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                Actions
-                %span.caret
-              %ul.dropdown-menu.pull-right{:role => "menu"}
-                %li
-                  %a{:href => "#"} Action
-                %li
-                  %a{:href => "#"} Another action
-                %li
-                  %a{:href => "#"} Something else here
-                %li.divider
-                %li
-                  %a{:href => "#"} Separated link
+          %i.fa.fa-bars.fa-fw
+          Release Request Status
         / /.panel-heading
         .panel-body
-          #morris-area-chart
+          .row
+            - @lastest_releases.in_groups_of(5).each do |group|
+              .col-sm-3
+                - group.each do |release|
+                  - if release
+                    .form-group
+                      .btn-group
+                        %label.btn{:class => "btn-#{release.status_colour}"}
+                          %span= release.id
+                        %label.btn.btn-default.active
+                          = release.jira_number
+
         / /.panel-body
     / /.col-lg-8
   / /.row
 - else
-  - flash.each do |message_type, message|
-    %div{:class => "alert alert-#{message_type}"}= message
+  = render "shared/flash_messages"

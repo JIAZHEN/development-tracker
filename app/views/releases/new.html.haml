@@ -2,6 +2,8 @@
   .col-lg-12
     %h1.page-header Make a Release Request
 
+= render "shared/flash_messages"
+
 %form#new_release.form-horizontal{"accept-charset" => "UTF-8", :action => "/releases", :method => "post", "data-toggle" => "validator"}
   %input{:name => "authenticity_token", :type => "hidden", :value => form_authenticity_token}/
 
@@ -43,7 +45,7 @@
 
   .github-info-container.form-header-underline
     #app-area.row
-      = render "shared/app_form"
+      = render "shared/project_form"
 
   .form-group
     .col-sm-offset-2.col-sm-1
@@ -53,5 +55,5 @@
   Ladda.bind('#sync');
   // plus form
   $('.plus-link').click(function(e){
-    $('#app-area').append('#{j render 'shared/app_form'}');
+    $('#app-area').append('#{j render 'shared/project_form'}');
   });

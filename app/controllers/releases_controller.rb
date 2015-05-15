@@ -25,7 +25,8 @@ class ReleasesController < ApplicationController
       :description => params["release"]["description"],
       :status_id => Status::WAIT_TO_DEPLOY)
     create_projects(release)
-    redirect_to root_path
+    flash[:success] = "Thank you, the request has been submitted. It should be deployed shortly."
+    redirect_to new_release_path
   end
 
   private
