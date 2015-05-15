@@ -1,0 +1,38 @@
+.row
+  .col-lg-12
+    %h1.page-header Releases
+
+= render "shared/flash_messages"
+
+.row
+  .col-md-12
+    .table-responsive
+      %table#mytable.table.table-bordred.table-striped
+        %thead
+          %th JIRA Number
+          %th Environment
+          %th QA
+          %th Description
+          %th Application
+          %th Status
+          %th Edit
+          %th Delete
+        %tbody
+          - @releases.each do |release|
+            %tr{:class => release.status_colour}
+              %td= release.jira_number
+              %td= release.environment.name
+              %td= release.qa
+              %td= release.description
+              %td= release.environment
+              %td= release.status.name
+              %td
+                %p{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Edit"}
+                  %button.btn.btn-primary.btn-xs{"data-target" => "#edit", "data-title" => "Edit", "data-toggle" => "modal"}
+                    %span.fa.fa-pencil
+              %td
+                %p{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Delete"}
+                  %button.btn.btn-danger.btn-xs{"data-target" => "#delete", "data-title" => "Delete", "data-toggle" => "modal"}
+                    %span.fa.fa-trash
+
+      .clearfix

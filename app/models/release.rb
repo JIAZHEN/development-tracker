@@ -7,16 +7,16 @@ class Release < ActiveRecord::Base
 
   has_many :projects
   belongs_to :status
+  belongs_to :environment
 
   STATUS_TO_COLOUR = {
-    Status::WAIT_TO_DEPLOY => "primary",
+    Status::WAIT_TO_DEPLOY => "warning",
     Status::DEPLOYING => "info",
     Status::DEPLOYED => "success",
-    Status::ROLLING_BACK => "danger",
-    Status::ROLLED_BACK => "warning"
+    Status::ROLLBACK => "danger"
   }
 
   def status_colour
-    STATUS_TO_COLOUR[status.id]
+    STATUS_TO_COLOUR.fetch(status.id, "active")
   end
 end

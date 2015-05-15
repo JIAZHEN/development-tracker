@@ -29,6 +29,10 @@ class ReleasesController < ApplicationController
     redirect_to new_release_path
   end
 
+  def index
+    @releases = Release.all
+  end
+
   private
 
   def respond_with_json(data)

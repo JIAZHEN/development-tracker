@@ -5,7 +5,7 @@ namespace :db do
       Environment.find_or_create_by(name: env)
     end
 
-    ["wait to deploy", "deploying", "deployed", "rolling back", "rolled back"].each do |env|
+    ["wait to deploy", "deploying", "deployed", "rollback"].each do |env|
       Status.find_or_create_by(name: env)
     end
 
