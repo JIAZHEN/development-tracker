@@ -5,6 +5,7 @@ class ReleasesController < ApplicationController
   def new
     @repositories = Repository.all
     @environments = Environment.all
+    @release = Release.new
   end
 
   def get_branches
@@ -23,10 +24,18 @@ class ReleasesController < ApplicationController
       :jira_number => params["release"]["jira_number"],
       :qa => params["release"]["qa"],
       :description => params["release"]["description"],
-      :status_id => Status::WAIT_TO_DEPLOY)
+      :status_id => Status::WAIT_TO_DEPLOY,
+      :username => current_username)
     create_projects(release)
     flash[:success] = "Thank you, the request has been submitted. It should be deployed shortly."
     redirect_to new_release_path
+  end
+
+  def edit
+    @release = Release.find(params[:id])
+    @repositories = Repository.all
+    @environments = Environment.all
+    render :new
   end
 
   def index

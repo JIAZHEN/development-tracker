@@ -29,6 +29,15 @@ module SessionsHelper
 
   def log_out
     session[:access_token] = nil
+    @current_username = nil
+  end
+
+  def current_username
+    @current_username ||= name_for_slack(client.user.name)
+  end
+
+  def name_for_slack(name)
+    "#{name[0]}#{name.split(' ').last}".downcase
   end
 
 end

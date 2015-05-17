@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
       @counters[:deployed] = Release.where(status_id: Status::DEPLOYED).count
       @counters[:rollback] = Release.where(status_id: Status::ROLLBACK).count
 
-      @lastest_releases = Release.order(:id => :desc).last(10)
+      @lastest_releases = Release.last(10)
     end
   end
 
