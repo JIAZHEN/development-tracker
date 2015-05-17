@@ -8,16 +8,6 @@ class ReleasesController < ApplicationController
     @release = Release.new
   end
 
-  def get_branches
-    repository = Repository.find_by(name: params["repository"])
-    branches = if params["type"] == "sync"
-      sync_branches_from_github(repository)
-    else
-      repository.active_branches
-    end
-    respond_with_json branches
-  end
-
   def create
     release_params = params["release"]
     release = Release.create(:environment_id => params["release"]["environment"],
@@ -40,6 +30,24 @@ class ReleasesController < ApplicationController
 
   def index
     @releases = Release.all
+    @statuses = Status.all if ops?
+  end
+
+  def get_branches
+    repository = Repository.find_by(name: params["repository"])
+    branches = if params["type"] == "sync"
+      sync_branches_from_github(repository)
+    else
+      repository.active_branches
+    end
+    respond_with_json branches
+  end
+
+  def update_status
+    release = Release.find(params["release_id"])
+    release.update(status_id: params["status_id"])
+    result = { colour: release.status_colour, name: release.status.name }
+    respond_with_json result
   end
 
   private

@@ -16,18 +16,19 @@
           %th Description
           %th Projects
           %th Status
-          %th Edit
-          %th Delete
+          %th Actions
+          - if ops?
+            %th Update
         %tbody
           - @releases.each do |release|
-            %tr
+            %tr{:id => release.id}
               %td= release.jira_number
               %td= release.environment.name
               %td= release.username
               %td= release.qa
               %td= release.description
               %td
-                %button.btn.btn-success{"data-target" => "#releaseProject#{release.id}", "data-toggle" => "modal", :type => "button"}= release.projects.size
+                %button.btn.btn-sm.btn-primary{"data-target" => "#releaseProject#{release.id}", "data-toggle" => "modal", :type => "button"}= release.projects.size
                 / Modal.
                 .modal.fade{:id => "releaseProject#{release.id}", "aria-hidden" => "true", "aria-labelledby" => "releaseProjectLabel", :role => "dialog", :tabindex => "-1"}
                   .modal-dialog
@@ -49,12 +50,26 @@
                           %p.lead= project.rollback_instruction
                           %hr
               %td
-                %button.btn{:class => "btn-#{release.status_colour}"}= release.status.name
+                %button.btn{:id => "release-#{release.id}-status", :class => "btn-#{release.status_colour}"}= release.status.name
               %td
-                %a.btn.btn-default{:href => edit_release_path(release), :role => "button"} Resubmit
-              %td
-                %p{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Delete"}
-                  %button.btn.btn-danger.btn-xs{"data-target" => "#delete", "data-title" => "Delete", "data-toggle" => "modal"}
-                    %span.fa.fa-trash
-
+                %a.btn.btn-sm.btn-default{:href => edit_release_path(release), :role => "button"} Resubmit
+              - if ops?
+                %td
+                  %select{:name => "status"}
+                    - @statuses.each do |status|
+                      %option{:value => status.id, :selected => release.status == status ? "selected" : nil}= status.name
       .clearfix
+
+:javascript
+  $("select[name='status']").change(function() {
+    var status_id = $(this).val();
+    var release_id = $(this).closest('tr').attr('id');
+    var target = $('#release-' + release_id + '-status');
+    $.post("/update_status",
+      { status_id : status_id, release_id : release_id},
+      function(response){
+        target.removeClass();
+        target.text(response.name);
+        target.addClass('btn btn-' + response.colour);
+      }, "json");
+  });

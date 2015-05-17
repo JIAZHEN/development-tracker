@@ -40,4 +40,8 @@ module SessionsHelper
     "#{name[0]}#{name.split(' ').last}".downcase
   end
 
+  def ops?
+    APP_CONFIG["Ops"].include?(current_username)
+  end
+
 end
