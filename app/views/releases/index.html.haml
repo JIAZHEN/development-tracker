@@ -60,6 +60,10 @@
                       %option{:value => status.id, :selected => release.status == status ? "selected" : nil}= status.name
       .clearfix
 
+.row
+  .col-md-12
+    = paginate @releases
+
 :javascript
   $("select[name='status']").change(function() {
     var status_id = $(this).val();

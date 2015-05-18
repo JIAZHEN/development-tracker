@@ -10,6 +10,7 @@ gem "jbuilder"
 gem "haml-rails"
 gem "mysql2"
 gem "octokit"
+gem "kaminari"
 
 
 group :development, :test do

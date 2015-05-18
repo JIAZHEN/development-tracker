@@ -31,7 +31,7 @@ class ReleasesController < ApplicationController
   end
 
   def index
-    @releases = Release.all
+    @releases = Release.page params[:page]
     @statuses = Status.all if ops?
   end
 
