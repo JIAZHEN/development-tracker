@@ -2,6 +2,8 @@ class ReleasesController < ApplicationController
 
   ORGANISATION = "globaldev".freeze
 
+  after_action :slack_post, :only => [:create, :update_status]
+
   def new
     @repositories = Repository.all
     @environments = Environment.all
@@ -75,4 +77,5 @@ class ReleasesController < ApplicationController
         :rollback_instruction => project[3] )
     end
   end
+
 end

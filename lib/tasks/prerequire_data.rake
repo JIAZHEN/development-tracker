@@ -18,4 +18,6 @@ namespace :db do
       Repository.find_or_create_by(name: repo.name)
     end
   end
+
+  task :initialise => ["db:drop", "db:create", "db:migrate", "db:populate"]
 end
