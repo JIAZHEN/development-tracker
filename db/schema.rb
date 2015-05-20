@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150516153030) do
+ActiveRecord::Schema.define(version: 20150520093945) do
 
   create_table "branches", force: :cascade do |t|
     t.integer  "repository_id", limit: 4
@@ -43,10 +43,17 @@ ActiveRecord::Schema.define(version: 20150516153030) do
     t.integer  "status_id",      limit: 4
     t.string   "description",    limit: 255
     t.string   "qa",             limit: 255
-    t.string   "username",       limit: 255
+    t.string   "dev",            limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
+
+  add_index "releases", ["description"], name: "index_releases_on_description", using: :btree
+  add_index "releases", ["dev"], name: "index_releases_on_dev", using: :btree
+  add_index "releases", ["environment_id"], name: "index_releases_on_environment_id", using: :btree
+  add_index "releases", ["jira_number"], name: "index_releases_on_jira_number", using: :btree
+  add_index "releases", ["qa"], name: "index_releases_on_qa", using: :btree
+  add_index "releases", ["status_id"], name: "index_releases_on_status_id", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name",       limit: 255

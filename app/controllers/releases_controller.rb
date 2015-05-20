@@ -17,7 +17,7 @@ class ReleasesController < ApplicationController
       :qa => params["release"]["qa"],
       :description => params["release"]["description"],
       :status_id => Status::WAIT_TO_DEPLOY,
-      :username => current_username)
+      :dev => current_username)
     create_projects(release)
     flash[:success] = "Thank you, the request has been submitted. It should be deployed shortly."
     redirect_to new_release_path
@@ -31,9 +31,8 @@ class ReleasesController < ApplicationController
   end
 
   def index
-    @releases = Release.page params[:page]
+    @releases = search_dataset.page params[:page]
     @statuses = Status.all if ops?
-
   end
 
   def get_branches
@@ -76,6 +75,21 @@ class ReleasesController < ApplicationController
       release.projects.find_or_create_by(:branch_id => project[0], :sha => project[1],
         :deployment_instruction => project[2],
         :rollback_instruction => project[3] )
+    end
+  end
+
+  def search_dataset
+    if params["field_name"].blank? || params["search_term"].blank?
+      Release
+    elsif params["field_name"] == "environment"
+      Release.joins(:environment).where("name LIKE :search_term",
+        :search_term => "%#{params["search_term"]}%")
+    elsif params["field_name"] == "status"
+      Release.joins(:status).where("name LIKE :search_term",
+        :search_term => "%#{params["search_term"]}%")
+    else
+      Release.where("#{params["field_name"]} LIKE :search_term",
+        :search_term => "%#{params["search_term"]}%")
     end
   end
 

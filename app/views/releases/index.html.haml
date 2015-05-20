@@ -4,6 +4,34 @@
 
 = render "shared/flash_messages"
 
+.row
+  .col-xs-8.col-xs-offset-2
+    %form{"accept-charset" => "UTF-8", :action => "/releases", :method => "get", "data-remote" => "true"}
+      .input-group
+        .input-group-btn.search-panel
+          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+            %span#search_concept Filter by
+            %span.caret
+          %ul.dropdown-menu{:role => "menu"}
+            %li
+              %a{:href => "#jira_number"} jira_number
+            %li
+              %a{:href => "#environment"} environment
+            %li
+              %a{:href => "#dev"} dev
+            %li
+              %a{:href => "#qa"} qa
+            %li
+              %a{:href => "#description"} description
+            %li
+              %a{:href => "#status"} status
+
+          %input{:name => "field_name", :type => "hidden", :value => ""}
+        %input.form-control{:name => "search_term", :placeholder => "Search term...", :type => "text"}
+          %span.input-group-btn
+            %button.btn.btn-default{:type => "submit"}
+              %i.fa.fa-search
+
 #releases
   = render "releases"
 
@@ -11,3 +39,11 @@
   .col-md-12
     = paginate @releases, :remote => true
 
+:javascript
+  $('.search-panel .dropdown-menu').find('a').click(function(e) {
+    e.preventDefault();
+    var field = $(this).attr("href").replace("#","");
+    var concept = $(this).text();
+    $('.search-panel span#search_concept').text(concept);
+    $('input[name="field_name"]').val(field);
+  });
