@@ -1,0 +1,2 @@
+$('#releases').html('#{escape_javascript render("releases")}');
+$('#paginator').html('#{escape_javascript(paginate(@releases, :remote => true).to_s)}');

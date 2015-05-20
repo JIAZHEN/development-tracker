@@ -1,0 +1,69 @@
+.row
+  .col-md-12
+    .table-responsive
+      %table#mytable.table.table-bordred.table-striped
+        %thead
+          %th JIRA Number
+          %th Environment
+          %th Dev
+          %th QA
+          %th Description
+          %th Projects
+          %th Status
+          %th Actions
+          - if ops?
+            %th Update
+        %tbody
+          - @releases.each do |release|
+            %tr{:id => release.id}
+              %td= release.jira_number
+              %td= release.environment.name
+              %td= release.username
+              %td= release.qa
+              %td= release.description
+              %td
+                %button.btn.btn-sm.btn-primary{"data-target" => "#releaseProject#{release.id}", "data-toggle" => "modal", :type => "button"}= release.projects.size
+                / Modal.
+                .modal.fade{:id => "releaseProject#{release.id}", "aria-hidden" => "true", "aria-labelledby" => "releaseProjectLabel", :role => "dialog", :tabindex => "-1"}
+                  .modal-dialog
+                    .modal-content
+                      .modal-header
+                        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                          %span{"aria-hidden" => "true"} ×
+                        %h4#releaseProjectLabel.modal-title Projects
+                      .modal-body
+                        - release.projects.each do |project|
+                          %h4= project.repository.name.capitalize
+                          %p.lead
+                            %small= "#{project.branch.name}: #{project.sha}"
+                          %h4
+                            %small Deployment Introduction
+                          %p.lead= project.deployment_instruction
+                          %h4
+                            %small Rollback Instruction
+                          %p.lead= project.rollback_instruction
+                          %hr
+              %td
+                %button.btn{:id => "release-#{release.id}-status", :class => "btn-#{release.status_colour}"}= release.status.name
+              %td
+                %a.btn.btn-sm.btn-default{:href => edit_release_path(release), :role => "button"} Resubmit
+              - if ops?
+                %td
+                  %select{:name => "status"}
+                    - @statuses.each do |status|
+                      %option{:value => status.id, :selected => release.status == status ? "selected" : nil}= status.name
+      .clearfix
+
+:javascript
+  $("select[name='status']").change(function() {
+    var status_id = $(this).val();
+    var release_id = $(this).closest('tr').attr('id');
+    var target = $('#release-' + release_id + '-status');
+    $.post("/update_status",
+      { status_id : status_id, release_id : release_id},
+      function(response){
+        target.removeClass();
+        target.text(response.name);
+        target.addClass('btn btn-' + response.colour);
+      }, "json");
+  });

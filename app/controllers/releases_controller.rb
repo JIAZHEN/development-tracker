@@ -33,6 +33,7 @@ class ReleasesController < ApplicationController
   def index
     @releases = Release.page params[:page]
     @statuses = Status.all if ops?
+
   end
 
   def get_branches
